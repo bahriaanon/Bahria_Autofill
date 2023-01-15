@@ -166,7 +166,7 @@ function injectFunction()
                             }
                             else if (!((inputs[index].id).slice(-12, -10) === "11" || ((inputs[index].id).slice(-12, -10) === "_1") && (inputs[index].id).slice(-1) === '0'))
                             {
-                                if ((inputs[index].id).slice(-3, -2)[0] === option)
+                                if ((inputs[index].id).slice(-3, -2)[0] === option.toString())
                                 {
                                     inputs[index].checked = true;
                                 }
@@ -176,7 +176,7 @@ function injectFunction()
                         }
                         else if (tab.document.getElementById("BodyPH_surveyUserControl_lbName").innerText === "Survey: Teacher Evaluation Form (Survey Form-10)")
                         {
-                            if ((inputs[index].id).slice(-3, -2)[0] === option || ((inputs[index].id).slice(-3, -2)[0] === "_" ? (inputs[index].id).slice(-4, -3)[0] === option : 0))
+                            if ((inputs[index].id).slice(-3, -2)[0] === option.toString() || ((inputs[index].id).slice(-3, -2)[0] === "_" ? (inputs[index].id).slice(-4, -3)[0] === option.toString() : 0))
                             {
                                 inputs[index].checked = true;
                             }
@@ -203,21 +203,21 @@ function injectFunction()
                     tab.document.getElementById("BodyPH_surveyUserControl_btnSubmit").click();
                 };
             }
-        }
-
-        let goToLMSInterval = setInterval(function()
-        {
-            if(counter == 0)
+            
+            let goToLMSInterval = setInterval(function()
             {
-                clearInterval(goToLMSInterval);
-
-                location.href = "https://cms.bahria.edu.pk/Sys/Common/GoToLMS.aspx";
-            }
-        }, 500);
+                if(counter == 0)
+                {
+                    clearInterval(goToLMSInterval);
+    
+                    location.href = "https://cms.bahria.edu.pk/Sys/Common/GoToLMS.aspx";
+                }
+            }, 500);
+        }
     }
 
     script = document.createElement("script");
-    script.innerHTML = openTabsFunction.toLocaleString() + " openTabs(" + fulltime.toString() + ", " + disabled.toString() + ", " + gender.toString() + ", " + ageGroup + ", " + learning.toString() + ", " + option + ".toString()" + ");";
+    script.innerHTML = openTabsFunction.toLocaleString() + " openTabs(" + fulltime.toString() + ", " + disabled.toString() + ", " + gender.toString() + ", " + ageGroup + ", " + learning.toString() + ", " + option + ");";
     document.head.appendChild(script);
 }
 
