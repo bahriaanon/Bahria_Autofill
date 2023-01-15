@@ -1,0 +1,231 @@
+function injectFunction()
+{
+    let fulltime;
+    while(fulltime != 'F' && fulltime != 'f' &&
+    fulltime != 'P' && fulltime != 'p')
+    {
+        fulltime = prompt("Fulltime or partime (f/p)", 'f');
+    }
+
+    if (fulltime === 'F' || fulltime === 'f')
+    {
+        fulltime = true;
+    }
+    else
+    {
+        fulltime = false;
+    }
+
+    let disabled;
+    while(disabled != 'Y' && disabled != 'y' &&
+    disabled != 'N' && disabled != 'n')
+    {
+        disabled = prompt("Disabled? (y/n)", 'n');
+    }
+
+    if (disabled === 'Y' || disabled === 'y')
+    {
+        disabled = true;
+    }
+    else
+    {
+        disabled = false;
+    }
+
+    let gender;
+    while(gender != 'M' && gender != 'm' &&
+    gender != 'F' && gender != 'f')
+    {
+        gender = prompt("Male or female (m/f)", 'm');
+    }
+
+    if (gender === 'M' || gender === 'm')
+    {
+        gender = true;
+    }
+    else
+    {
+        gender = false;
+    }
+
+    let ageGroup;
+    while(ageGroup != '1' && ageGroup != '2' &&
+    ageGroup != '3')
+    {
+        ageGroup = prompt("Age group? (1/2/3)", '1');
+    }
+
+    let learning;
+    while(learning != 'C' && learning != 'c' &&
+    learning != 'D' && learning != 'd')
+    {
+        learning = prompt("Collaborative learning or Distance learning (c/d)", 'c');
+    }
+
+    if (learning == 'C' || learning == 'c')
+    {
+        learning = true;
+    }
+    else
+    {
+        learning = false;
+    }
+
+    let option;
+    while(option != '0' && option != '1' &&
+    option != '2' && option != '3' &&
+    option != '4')
+    {
+        option = prompt("Strongly agree or agree or uncertain or disagree or Strongly disagree (0/1/2/3/4)", '2');
+    }
+
+    var openTabsFunction = function openTabs(fulltime, disabled, gender, ageGroup, learning, option)
+    {
+        var counter = 0;
+        links = document.getElementsByTagName("a");
+
+        for (index = 0; index < links.length; index++) {
+            if (links[index].innerText === "Evaluate")
+            {
+                let tab = window.open(links[index].getAttribute("href"));
+
+                counter++;
+
+                function checkLoad()
+                {
+                    let interval = setInterval(function()
+                    {
+                        if(tab.window.location.href === "https://cms.bahria.edu.pk/Sys/Student/QualityAssurance/QualityAssuranceSurveys.aspx")
+                        {
+                            tab.window.close();
+                            
+                            counter--;
+
+                            clearInterval(interval);
+                        }
+                    }, 500);
+                }
+
+                tab.onload = function ()
+                {
+                    supported = false;
+
+                    inputs = tab.document.getElementsByTagName("input");
+
+                    for (index = 0; index < inputs.length; index++)
+                    {
+                        if (tab.document.getElementById("BodyPH_surveyUserControl_lbName").innerText === "Survey: Student Course Evaluation Questionnaire (Survey Form-1)")
+                        {
+                            if ((inputs[index].id).slice(-12) === "_1_rbl_0_4_0")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (!fulltime && (inputs[index].id).slice(-12) === "11_rbl_0_0_0")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (fulltime && (inputs[index].id).slice(-12) === "11_rbl_0_1_0")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (disabled && (inputs[index].id).slice(-12) === "11_rbl_1_0_1")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (!disabled && (inputs[index].id).slice(-12) === "11_rbl_1_1_1")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (gender && (inputs[index].id).slice(-12) === "11_rbl_3_0_3")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (!gender && (inputs[index].id).slice(-12) === "11_rbl_3_1_3")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (ageGroup === '1' && (inputs[index].id).slice(-12) === "11_rbl_4_0_4")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (ageGroup == '2' && (inputs[index].id).slice(-12) === "11_rbl_4_1_4")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (ageGroup == '3' && (inputs[index].id).slice(-12) === "11_rbl_4_2_4")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (!learning && (inputs[index].id).slice(-12) === "11_rbl_5_0_5")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (learning && (inputs[index].id).slice(-12) === "11_rbl_5_1_5")
+                            {
+                                inputs[index].checked = true;
+                            }
+                            else if (!((inputs[index].id).slice(-12, -10) === "11" || ((inputs[index].id).slice(-12, -10) === "_1") && (inputs[index].id).slice(-1) === '0'))
+                            {
+                                if ((inputs[index].id).slice(-3, -2)[0] === option)
+                                {
+                                    inputs[index].checked = true;
+                                }
+                            }
+
+                            supported = true;
+                        }
+                        else if (tab.document.getElementById("BodyPH_surveyUserControl_lbName").innerText === "Survey: Teacher Evaluation Form (Survey Form-10)")
+                        {
+                            if ((inputs[index].id).slice(-3, -2)[0] === option || ((inputs[index].id).slice(-3, -2)[0] === "_" ? (inputs[index].id).slice(-4, -3)[0] === option : 0))
+                            {
+                                inputs[index].checked = true;
+                            }
+
+                            supported = true;
+                        }
+                        else
+                        {
+                            alert(tab.document.getElementById("BodyPH_surveyUserControl_lbName").innerText + " not supported yet");
+
+                            supported = false;
+                        }
+                    }
+
+                    if (supported)
+                    {
+                        checkLoad();
+                    }
+                    else
+                    {
+                        alert("Form not supported");
+                    }
+
+                    tab.document.getElementById("BodyPH_surveyUserControl_btnSubmit").click();
+                };
+            }
+        }
+
+        while (true)
+        {
+            if(counter == 0)
+            {
+                location.href = "https://cms.bahria.edu.pk/Sys/Common/GoToLMS.aspx";
+
+                break;
+            }
+        }
+    }
+
+    script = document.createElement("script");
+    script.innerHTML = openTabsFunction.toLocaleString() + " openTabs(" + fulltime + ", " + disabled + ", " + gender + ", " + ageGroup + ", " + learning + ", " + option + ");";
+    document.head.appendChild(script);
+}
+
+if(window.location.href === "https://cms.bahria.edu.pk/Sys/Student/QualityAssurance/QualityAssuranceSurveys.aspx")
+{
+    injectFunction();
+}
+else
+{
+    alert("Please run script on https://cms.bahria.edu.pk/Sys/Student/QualityAssurance/QualityAssuranceSurveys.aspx")
+}
