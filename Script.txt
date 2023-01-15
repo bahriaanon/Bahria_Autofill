@@ -93,7 +93,7 @@ function injectFunction()
 
                 function checkLoad()
                 {
-                    let interval = setInterval(function()
+                    let checkLoadInterval = setInterval(function()
                     {
                         if(tab.window.location.href === "https://cms.bahria.edu.pk/Sys/Student/QualityAssurance/QualityAssuranceSurveys.aspx")
                         {
@@ -101,7 +101,7 @@ function injectFunction()
                             
                             counter--;
 
-                            clearInterval(interval);
+                            clearInterval(checkLoadInterval);
                         }
                     }, 500);
                 }
@@ -144,15 +144,15 @@ function injectFunction()
                             {
                                 inputs[index].checked = true;
                             }
-                            else if (ageGroup === '1' && (inputs[index].id).slice(-12) === "11_rbl_4_0_4")
+                            else if (ageGroup === 1 && (inputs[index].id).slice(-12) === "11_rbl_4_0_4")
                             {
                                 inputs[index].checked = true;
                             }
-                            else if (ageGroup == '2' && (inputs[index].id).slice(-12) === "11_rbl_4_1_4")
+                            else if (ageGroup == 2 && (inputs[index].id).slice(-12) === "11_rbl_4_1_4")
                             {
                                 inputs[index].checked = true;
                             }
-                            else if (ageGroup == '3' && (inputs[index].id).slice(-12) === "11_rbl_4_2_4")
+                            else if (ageGroup == 3 && (inputs[index].id).slice(-12) === "11_rbl_4_2_4")
                             {
                                 inputs[index].checked = true;
                             }
@@ -205,14 +205,19 @@ function injectFunction()
             }
         }
 
-        if(counter == 0)
+        let goToLMSInterval = setInterval(function()
         {
-            location.href = "https://cms.bahria.edu.pk/Sys/Common/GoToLMS.aspx";
-        }
+            if(counter == 0)
+            {
+                clearInterval(goToLMSInterval);
+
+                location.href = "https://cms.bahria.edu.pk/Sys/Common/GoToLMS.aspx";
+            }
+        }, 500);
     }
 
     script = document.createElement("script");
-    script.innerHTML = openTabsFunction.toLocaleString() + " openTabs(" + fulltime + ", " + disabled + ", " + gender + ", " + ageGroup + ", " + learning + ", " + option + ");";
+    script.innerHTML = openTabsFunction.toLocaleString() + " openTabs(" + fulltime.toString() + ", " + disabled.toString() + ", " + gender.toString() + ", " + ageGroup + ", " + learning.toString() + ", " + option + ".toString()" + ");";
     document.head.appendChild(script);
 }
 
