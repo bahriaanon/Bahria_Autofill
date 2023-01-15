@@ -205,14 +205,9 @@ function injectFunction()
             }
         }
 
-        while (true)
+        if(counter == 0)
         {
-            if(counter == 0)
-            {
-                location.href = "https://cms.bahria.edu.pk/Sys/Common/GoToLMS.aspx";
-
-                break;
-            }
+            location.href = "https://cms.bahria.edu.pk/Sys/Common/GoToLMS.aspx";
         }
     }
 
