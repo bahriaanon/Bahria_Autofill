@@ -1,4 +1,4 @@
-function injectFunction()
+function injectFunction(
 {
     let fulltime;
     while(fulltime != 'F' && fulltime != 'f' &&
